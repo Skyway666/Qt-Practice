@@ -6,52 +6,43 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>772</width>
-    <height>560</height>
+    <width>821</width>
+    <height>608</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <layout class="QVBoxLayout" name="verticalLayout">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
     <item>
-     <widget class="QLabel" name="text">
-      <property name="text">
-       <string>Hello Lorien's Mommy</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QPushButton" name="Exit">
+       <widget class="QLabel" name="text">
         <property name="text">
-         <string>Exit</string>
+         <string>Some text</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="Enter">
-        <property name="text">
-         <string>Enter</string>
-        </property>
-       </widget>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="Exit">
+          <property name="text">
+           <string>Exit</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="Enter">
+          <property name="text">
+           <string>Enter</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
-    </item>
-    <item>
-     <spacer name="verticalSpacer">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-      <property name="sizeHint" stdset="0">
-       <size>
-        <width>20</width>
-        <height>436</height>
-       </size>
-      </property>
-     </spacer>
     </item>
    </layout>
   </widget>
@@ -60,20 +51,56 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>772</width>
-     <height>21</height>
+     <width>821</width>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuDocking_window">
+    <property name="title">
+     <string>Docking window</string>
+    </property>
+   </widget>
+   <addaction name="menuDocking_window"/>
   </widget>
-  <widget class="QToolBar" name="mainToolBar">
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
+  <widget class="QDockWidget" name="Hierarchy">
+   <property name="windowTitle">
+    <string>Hierarchy</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
    </attribute>
-   <attribute name="toolBarBreak">
+   <widget class="QWidget" name="dockWidgetContents_6"/>
+  </widget>
+  <widget class="QDockWidget" name="Inspector_2">
+   <property name="floating">
     <bool>false</bool>
+   </property>
+   <property name="windowTitle">
+    <string>Inspector</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
    </attribute>
+   <widget class="QWidget" name="dockWidgetContents_7"/>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="Project">
+   <property name="windowTitle">
+    <string>Project</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>8</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_8"/>
+  </widget>
+  <widget class="QDockWidget" name="Rendering_2">
+   <property name="windowTitle">
+    <string>Rendering</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_9"/>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
