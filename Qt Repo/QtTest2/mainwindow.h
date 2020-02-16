@@ -16,6 +16,10 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void openProject();
+    void saveProject();
+
 private:
     Ui::MainWindow *uiMainWindow;
     Ui::Inspector * uiInspector;
