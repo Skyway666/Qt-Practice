@@ -25,15 +25,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        hierarchy.cpp \
+        inspector.cpp \
         main.cpp \
         mainwindow.cpp
 
 HEADERS += \
+        hierarchy.h \
+        inspector.h \
         mainwindow.h
 
 FORMS += \
-        inspector.ui \
-        mainwindow.ui
+        hierarchy.ui \
+        mainwindow.ui \
+        transform.ui \
+        universals.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
