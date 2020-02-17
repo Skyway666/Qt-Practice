@@ -21,8 +21,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     hierarchy = new Hierarchy();
     uiMainWindow->Hierarchy->setWidget(hierarchy);
+
     inspector = new Inspector();
     uiMainWindow->Inspector->setWidget(inspector);
+
+    connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
 }
 
 MainWindow::~MainWindow()

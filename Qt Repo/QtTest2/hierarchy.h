@@ -15,9 +15,15 @@ public:
     explicit Hierarchy(QWidget *parent = nullptr);
     ~Hierarchy();
 
+signals:
+    void entityChanged(int selectedRow);
+
 public slots:
+
     void onAddEntity();
     void onRemoveEntity();
+    void onEntitySelected(int row);
+
 
 private:
     Ui::Hierarchy *ui;

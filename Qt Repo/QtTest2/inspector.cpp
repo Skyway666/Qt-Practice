@@ -2,6 +2,8 @@
 #include "ui_transform.h"
 #include "ui_universals.h"
 
+#include "iostream"
+
 Inspector::Inspector(QWidget* parent): QWidget(parent),
     uiTransform(new Ui::Transform),
     uiUniversals(new Ui::Universals)
@@ -24,4 +26,8 @@ Inspector::~Inspector()
 {
     delete uiTransform;
     delete uiUniversals;
+}
+
+void Inspector::onEntityChanged(int row){
+    std::cout << "Row Changed" << std::endl;
 }
