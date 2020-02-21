@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "hierarchy.h"
 #include "inspector.h"
+#include "sceneview.h"
 
 #include "ui_mainwindow.h"
 
@@ -8,6 +9,7 @@
 
 #include <QMessageBox>
 #include <QFileDialog>
+#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -24,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     inspector = new Inspector();
     uiMainWindow->Inspector->setWidget(inspector);
+
+    scene = new SceneView();
+    QVBoxLayout* layout = new QVBoxLayout();
+    layout->addWidget(scene);
+    uiMainWindow->centralWidget->setLayout(layout);
 
     connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
 }

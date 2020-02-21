@@ -9,6 +9,7 @@ class MainWindow;
 
 class Hierarchy;
 class Inspector;
+class SceneView;
 
 class MainWindow : public QMainWindow
 {
@@ -26,6 +27,7 @@ private:
     Ui::MainWindow *uiMainWindow;
     Hierarchy * hierarchy;
     Inspector* inspector;
+    SceneView* scene;
 
 };
 

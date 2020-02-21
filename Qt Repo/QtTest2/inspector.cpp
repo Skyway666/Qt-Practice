@@ -30,4 +30,5 @@ Inspector::~Inspector()
 
 void Inspector::onEntityChanged(int row){
     std::cout << "Row Changed" << std::endl;
+    std::cout << row << std::endl;
 }
