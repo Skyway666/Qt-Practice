@@ -20,6 +20,7 @@ Hierarchy::~Hierarchy()
 
 void Hierarchy::onAddEntity(){
     ui->listWidget->addItem("Entity");
+    emit entityCreated();
 }
 void Hierarchy::onRemoveEntity(){
     int row = ui->listWidget->currentRow();

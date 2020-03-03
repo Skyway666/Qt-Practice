@@ -54,12 +54,21 @@
     <property name="title">
      <string>File</string>
     </property>
+    <addaction name="actionNew_Project"/>
     <addaction name="actionOpen_Project"/>
     <addaction name="actionSave_Project"/>
     <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionUndo"/>
+    <addaction name="actionRedo"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -71,6 +80,7 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionNew_Project"/>
    <addaction name="actionOpen_Project"/>
    <addaction name="actionSave_Project"/>
   </widget>
@@ -78,7 +88,7 @@
   <action name="actionOpen_Project">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/Folder.png</normaloff>:/icons/icons/Folder.png</iconset>
+     <normaloff>:/icons/Open</normaloff>:/icons/Open</iconset>
    </property>
    <property name="text">
     <string>Open Project</string>
@@ -87,15 +97,46 @@
   <action name="actionSave_Project">
    <property name="icon">
     <iconset resource="icons.qrc">
-     <normaloff>:/icons/icons/Disquette.png</normaloff>:/icons/icons/Disquette.png</iconset>
+     <normaloff>:/icons/Save</normaloff>:/icons/Save</iconset>
    </property>
    <property name="text">
     <string>Save Project</string>
    </property>
   </action>
   <action name="actionExit">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/Exit</normaloff>:/icons/Exit</iconset>
+   </property>
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionNew_Project">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/New</normaloff>:/icons/New</iconset>
+   </property>
+   <property name="text">
+    <string>New Project</string>
+   </property>
+  </action>
+  <action name="actionUndo">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/Undo</normaloff>:/icons/Undo</iconset>
+   </property>
+   <property name="text">
+    <string>Undo</string>
+   </property>
+  </action>
+  <action name="actionRedo">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/Redo</normaloff>:/icons/Redo</iconset>
+   </property>
+   <property name="text">
+    <string>Redo</string>
    </property>
   </action>
  </widget>

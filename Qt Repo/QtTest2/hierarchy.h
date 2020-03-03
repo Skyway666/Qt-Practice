@@ -17,6 +17,7 @@ public:
 
 signals:
     void entityChanged(int selectedRow);
+    void entityCreated();
 
 public slots:
 
