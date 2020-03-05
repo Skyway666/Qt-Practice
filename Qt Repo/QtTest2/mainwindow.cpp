@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
     uiMainWindow->centralWidget->setLayout(layout);
 
     connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
-    connect(hierarchy, SIGNAL(entityCreated()), scene, SLOT(onEntityCreated()));
+    connect(hierarchy, SIGNAL(entityCreated(QString)), scene, SLOT(onEntityCreated(QString)));
 }
 
 MainWindow::~MainWindow()

@@ -35,6 +35,27 @@
      </item>
     </layout>
    </item>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Entity Shape</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QComboBox" name="entityTypeSelector">
+     <item>
+      <property name="text">
+       <string>Rectangle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Elipsis</string>
+      </property>
+     </item>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

@@ -17,7 +17,7 @@ public:
 
 signals:
     void entityChanged(int selectedRow);
-    void entityCreated();
+    void entityCreated(QString type);
 
 public slots:
 

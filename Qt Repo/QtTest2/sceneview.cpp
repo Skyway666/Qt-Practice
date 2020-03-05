@@ -10,65 +10,62 @@ SceneView::SceneView(QWidget *parent) : QWidget(parent)
 {
     for(int i = 0; i < 100; i++)
         sceneObjects[i] = nullptr;
+
+
 }
 
-void SceneView::paintEvent(QPaintEvent *event)
-{
-
-    QColor blue = QColor::fromRgb(127,190,220);
-    QColor white = QColor::fromRgb(255,255,255);
-    QColor black = QColor::fromRgb(0,0,0);
-
-    QPainter painter(this);
-
+void SceneObject::setDrawingTools(QPainter* painter){
 
     QBrush brush;
     QPen pen;
 
-    brush.setColor(blue);
+    // Set fill
+    brush.setColor(fillColor);
     brush.setStyle(Qt::BrushStyle::SolidPattern);
-    pen.setStyle(Qt::PenStyle::NoPen);
-    painter.setBrush(brush);
-    painter.setPen(pen);
-    /*
-    painter.drawRect(rect());
+    // Set Stroke
+    pen.setWidth(strokeThickness);
+    pen.setColor(strokeColor);
+    pen.setStyle(strokeStyle);
 
+    painter->setBrush(brush);
+    painter->setPen(pen);
+}
 
-    brush.setColor(white);
-    pen.setWidth(4);
-    pen.setColor(black);
-    pen.setStyle(Qt::PenStyle::DashLine);
-    painter.setBrush(brush);
-    painter.setPen(pen);
+void Rectangle::Draw(QPainter* painter){
+    setDrawingTools(painter);
+    painter->drawRect(position.x,position.y, size.x, size.y);
+}
 
-    int r = 64;
-    int w = r*2;
-    int h = r*2;
-    int x = rect().width() / 2 - r;
-    int y = rect().height() / 2 - r;
+void Elipsis::Draw(QPainter* painter){
+    setDrawingTools(painter);
+    QRect circleRect(position.x,position.y,size.x,size.y);
+    painter->drawEllipse(circleRect);
+}
 
-    QRect circleRect(x,y,w,h);
-    painter.drawEllipse(circleRect);*/
-
-
+void SceneView::paintEvent(QPaintEvent *event)
+{
    std::cout << "Paint event" << std::endl;
 
-   for(int i = 0; i < 100 && sceneObjects[i] != nullptr; i++){
-       // This should be done for every object in the "Draw()" function, but I'm just messing around
+   QPainter painter(this);
 
-       Rectangle* myRect = (Rectangle*)sceneObjects[i];
-       painter.drawRect(myRect->position.x, myRect->position.y, myRect->size.x,myRect->size.y);
-   }
-
-
-
+   for(int i = 0; i < 100 && sceneObjects[i] != nullptr; i++)
+       sceneObjects[i]->Draw(&painter);
 }
 
 
-void SceneView::onEntityCreated(){
-  Rectangle* newRectangle = new Rectangle();
-  sceneObjects[objectIndex++] = newRectangle;
+void SceneView::onEntityCreated(QString type){
+   SceneObject* newObject = nullptr;
 
-  newRectangle->size.x = 100;
-  newRectangle->size.y = 200;
+   if(type == "Elipsis")
+    newObject = new Elipsis();
+   else if(type == "Rectangle")
+    newObject = new Rectangle();
+
+  sceneObjects[objectIndex++] = newObject;
+
+  static int x = 0;
+  newObject->position.x = 100 + x;
+  x += 100;
+  newObject->position.y = 200;
+  repaint();
 }
