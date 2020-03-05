@@ -18,12 +18,13 @@ public:
 signals:
     void entityChanged(int selectedRow);
     void entityCreated(QString type);
+    void entityRemoved(int index);
 
 public slots:
 
     void onAddEntity();
     void onRemoveEntity();
-    void onEntitySelected(int row);
+    void onEntitySelected(int index);
 
 
 private:

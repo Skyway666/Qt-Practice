@@ -23,8 +23,9 @@ void Hierarchy::onAddEntity(){
     emit entityCreated(ui->entityTypeSelector->currentText());
 }
 void Hierarchy::onRemoveEntity(){
-    int row = ui->listWidget->currentRow();
-    ui->listWidget->takeItem(row);
+    int index = ui->listWidget->currentRow();
+    ui->listWidget->takeItem(index);
+    emit entityRemoved(index);
 }
 
 void Hierarchy::onEntitySelected(int row){

@@ -60,6 +60,7 @@ signals:
 public slots:
 
     void onEntityCreated(QString type);
+    void onEntityRemoved(int index);
 
 private:
 

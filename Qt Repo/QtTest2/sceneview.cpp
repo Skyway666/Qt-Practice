@@ -44,8 +44,6 @@ void Elipsis::Draw(QPainter* painter){
 
 void SceneView::paintEvent(QPaintEvent *event)
 {
-   std::cout << "Paint event" << std::endl;
-
    QPainter painter(this);
 
    for(int i = 0; i < 100 && sceneObjects[i] != nullptr; i++)
@@ -68,4 +66,20 @@ void SceneView::onEntityCreated(QString type){
   x += 100;
   newObject->position.y = 200;
   repaint();
+}
+
+void SceneView::onEntityRemoved(int index){
+   // TODO(Lucas): Display a message in the editor
+   if(index == -1){
+    std::cout << "Select an entity first" << std::endl;
+   } else{
+    delete sceneObjects[index];
+    sceneObjects[index] = nullptr;
+
+    for(int i = index; i < objectIndex; i++){
+        sceneObjects[i] = sceneObjects[i + 1];
+    }
+    objectIndex--;
+    repaint();
+   }
 }
