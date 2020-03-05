@@ -19,7 +19,7 @@ Hierarchy::~Hierarchy()
 }
 
 void Hierarchy::onAddEntity(){
-    ui->listWidget->addItem("Entity");
+    ui->listWidget->addItem(ui->entityTypeSelector->currentText());
     emit entityCreated(ui->entityTypeSelector->currentText());
 }
 void Hierarchy::onRemoveEntity(){
