@@ -21,7 +21,8 @@ class SceneObject{
         virtual ~SceneObject() {}
         Shape shape;
         vec2 position = vec2();
-        vec2 size = vec2(100, 200);
+        vec2 scale = vec2(1, 2);
+        float size = 100.0;
 
         QColor fillColor = QColor(QColor::fromRgb(255,0,0)); // Red
         QColor strokeColor = QColor(QColor::fromRgb(0,0,0)); // Black
@@ -29,22 +30,7 @@ class SceneObject{
         Qt::PenStyle strokeStyle = Qt::PenStyle::SolidLine;
 
         void setDrawingTools(QPainter* painter);
-        virtual void Draw(QPainter* painter){}
-};
-
-
-class Rectangle: public SceneObject {
-    public:
-        Rectangle(): SceneObject(Shape::RECTANGLE){}
-        void Draw(QPainter* painter) override;
-};
-
-// For the moment just a circle
-class Elipsis: public SceneObject {
-    public:
-        Elipsis(): SceneObject(Shape::ELIPSIS){}
-        void Draw(QPainter* painter) override;
-
+        void Draw(QPainter* painter);
 };
 
 class SceneView : public QWidget

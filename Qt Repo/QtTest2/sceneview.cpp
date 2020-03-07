@@ -31,15 +31,20 @@ void SceneObject::setDrawingTools(QPainter* painter){
     painter->setPen(pen);
 }
 
-void Rectangle::Draw(QPainter* painter){
+void SceneObject::Draw(QPainter *painter)
+{
     setDrawingTools(painter);
-    painter->drawRect(position.x,position.y, size.x, size.y);
-}
+    QRect rect(position.x,position.y,size*scale.x,size*scale.y);
 
-void Elipsis::Draw(QPainter* painter){
-    setDrawingTools(painter);
-    QRect circleRect(position.x,position.y,size.x,size.y);
-    painter->drawEllipse(circleRect);
+    switch(shape)
+    {
+    case RECTANGLE:
+        painter->drawRect(rect);
+        break;
+    case ELIPSIS:
+        painter->drawEllipse(rect);
+        break;
+    };
 }
 
 void SceneView::paintEvent(QPaintEvent *event)
@@ -55,9 +60,9 @@ void SceneView::onEntityCreated(QString type){
    SceneObject* newObject = nullptr;
 
    if(type == "Elipsis")
-    newObject = new Elipsis();
+    newObject = new SceneObject(ELIPSIS);
    else if(type == "Rectangle")
-    newObject = new Rectangle();
+    newObject = new SceneObject(RECTANGLE);
 
   sceneObjects[objectIndex++] = newObject;
 

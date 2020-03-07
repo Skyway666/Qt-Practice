@@ -40,6 +40,7 @@ HEADERS += \
 FORMS += \
         hierarchy.ui \
         mainwindow.ui \
+        shaperenderer.ui \
         transform.ui \
         universals.ui
 

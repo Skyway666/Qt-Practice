@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     hierarchy = new Hierarchy();
     uiMainWindow->Hierarchy->setWidget(hierarchy);
 
-    inspector = new Inspector();
+    inspector = new Inspector(this);
     uiMainWindow->Inspector->setWidget(inspector);
 
     scene = new SceneView();
@@ -42,6 +42,15 @@ MainWindow::~MainWindow()
     delete uiMainWindow;
 }
 
+SceneObject** MainWindow::getSceneObject(int index)
+{
+    return &scene->sceneObjects[index];
+}
+
+void MainWindow::forceRepaint()
+{
+    scene->update();
+}
 
 void MainWindow::openProject(){
 

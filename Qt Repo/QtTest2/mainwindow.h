@@ -11,6 +11,8 @@ class Hierarchy;
 class Inspector;
 class SceneView;
 
+class SceneObject;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -18,6 +20,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+    SceneObject** getSceneObject(int index);
+    void forceRepaint();
 
 public slots:
     void openProject();
