@@ -2,6 +2,7 @@
 #include "hierarchy.h"
 #include "inspector.h"
 #include "sceneview.h"
+#include "actions.h"
 
 #include "ui_mainwindow.h"
 
@@ -32,9 +33,14 @@ MainWindow::MainWindow(QWidget *parent) :
     layout->addWidget(scene);
     uiMainWindow->centralWidget->setLayout(layout);
 
+    actions = new Actions(this);
+
     connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
     connect(hierarchy, SIGNAL(entityCreated(QString)), scene, SLOT(onEntityCreated(QString)));
     connect(hierarchy, SIGNAL(entityRemoved(int)), scene, SLOT(onEntityRemoved(int)));
+
+    connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(Undo()));
+    connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(Redo()));
 }
 
 MainWindow::~MainWindow()
@@ -47,9 +53,29 @@ SceneObject** MainWindow::getSceneObject(int index)
     return &scene->sceneObjects[index];
 }
 
+void MainWindow::updateInspector()
+{
+    inspector->updateInspector();
+}
+
 void MainWindow::forceRepaint()
 {
     scene->update();
+}
+
+void MainWindow::DoAction(Action *action)
+{
+    actions->Do(action);
+}
+
+void MainWindow::Undo()
+{
+    actions->Undo();
+}
+
+void MainWindow::Redo()
+{
+    actions->ReDo();
 }
 
 void MainWindow::openProject(){

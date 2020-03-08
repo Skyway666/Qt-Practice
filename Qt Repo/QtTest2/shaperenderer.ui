@@ -29,7 +29,11 @@
     </widget>
    </item>
    <item row="5" column="2">
-    <widget class="QDoubleSpinBox" name="outlineThicknessValue"/>
+    <widget class="QDoubleSpinBox" name="outlineThicknessValue">
+     <property name="maximum">
+      <double>100.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="6" column="1">
     <widget class="QLabel" name="outlineStyleLabel">
@@ -39,7 +43,11 @@
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QDoubleSpinBox" name="sizeValue"/>
+    <widget class="QDoubleSpinBox" name="sizeValue">
+     <property name="maximum">
+      <double>1000.000000000000000</double>
+     </property>
+    </widget>
    </item>
    <item row="4" column="1">
     <widget class="QLabel" name="outlineColorLabel">

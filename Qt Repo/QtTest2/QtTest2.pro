@@ -25,6 +25,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+        actions.cpp \
         hierarchy.cpp \
         inspector.cpp \
         main.cpp \
@@ -32,6 +33,7 @@ SOURCES += \
         sceneview.cpp
 
 HEADERS += \
+        actions.h \
         hierarchy.h \
         inspector.h \
         mainwindow.h \

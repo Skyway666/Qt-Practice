@@ -10,8 +10,10 @@ class MainWindow;
 class Hierarchy;
 class Inspector;
 class SceneView;
+class Actions;
 
 class SceneObject;
+class Action;
 
 class MainWindow : public QMainWindow
 {
@@ -22,18 +24,24 @@ public:
     ~MainWindow();
 
     SceneObject** getSceneObject(int index);
+    void updateInspector();
     void forceRepaint();
+
+    void DoAction(Action* action);
 
 public slots:
     void openProject();
     void saveProject();
+
+    void Undo();
+    void Redo();
 
 private:
     Ui::MainWindow *uiMainWindow;
     Hierarchy * hierarchy;
     Inspector* inspector;
     SceneView* scene;
-
+    Actions* actions;
 };
 
 #endif // MAINWINDOW_H

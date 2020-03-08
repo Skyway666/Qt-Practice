@@ -19,12 +19,23 @@ public:
     explicit Inspector(MainWindow* main, QWidget* parent = nullptr);
     ~Inspector();
 
-    void updateInspector(int index);
+    void updateInspector();
 
 public slots:
 
     void onEntityChanged(int row);
+
+    //Object properties
+    void onTransformChangeX(int value);
+    void onTransformChangeY(int value);
+    void onScaleChangeX(double value);
+    void onScaleChangeY(double value);
+
+    //Shape properties
     void onShapeChanged(int index);
+    void onSizeChanged(double value);
+    void onOutlineThicknessChanged(double value);
+    void onOutlineStyleChanged(int index);
 
 private:    
     Ui::Universals*     uiUniversals;
