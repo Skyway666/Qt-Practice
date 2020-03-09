@@ -2,6 +2,7 @@
 #define ACTIONS_H
 
 #include <QList>
+#include <QColor>
 
 class SceneObject;
 
@@ -91,6 +92,32 @@ public:
 
     float value;
     float previousValue;
+
+    void Do() override;
+    void Undo() override;
+};
+
+class ChangeFillColor : public Action
+{
+public:
+    ChangeFillColor(SceneObject** object, QColor color): Action(object), color(color)
+    {}
+
+    QColor color;
+    QColor previousColor;
+
+    void Do() override;
+    void Undo() override;
+};
+
+class ChangeOutlineColor : public Action
+{
+public:
+    ChangeOutlineColor(SceneObject** object, QColor color): Action(object), color(color)
+    {}
+
+    QColor color;
+    QColor previousColor;
 
     void Do() override;
     void Undo() override;

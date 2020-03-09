@@ -34,6 +34,8 @@ public slots:
     //Shape properties
     void onShapeChanged(int index);
     void onSizeChanged(double value);
+    void onFillColorChanged();
+    void onOutlineColorChanged();
     void onOutlineThicknessChanged(double value);
     void onOutlineStyleChanged(int index);
 

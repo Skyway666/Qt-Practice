@@ -6,6 +6,8 @@
 #include "ui_transform.h"
 #include "ui_shaperenderer.h"
 
+#include <QColorDialog>
+
 #include "iostream"
 
 Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
@@ -40,6 +42,8 @@ Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
 
     connect(uiShapeRenderer->shapePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(onShapeChanged(int)));
     connect(uiShapeRenderer->sizeValue, SIGNAL(valueChanged(double)), this, SLOT(onSizeChanged(double)));
+    connect(uiShapeRenderer->fillColorButton, SIGNAL(clicked()), this, SLOT(onFillColorChanged()));
+    connect(uiShapeRenderer->outlineColorButton, SIGNAL(clicked()), this, SLOT(onOutlineColorChanged()));
     connect(uiShapeRenderer->outlineThicknessValue, SIGNAL(valueChanged(double)), this, SLOT(onOutlineThicknessChanged(double)));
     connect(uiShapeRenderer->outlineStylePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(onOutlineStyleChanged(int)));
 }
@@ -73,8 +77,10 @@ void Inspector::updateInspector()
 
     uiShapeRenderer->shapePicker->setCurrentIndex(object->shape);
     uiShapeRenderer->sizeValue->setValue(object->size);
-    //Fill color
-    //Outline color
+    QString qss = QString("background-color: %1").arg(object->fillColor.name());
+    uiShapeRenderer->fillColorButton->setStyleSheet(qss);
+    qss = QString("background-color: %1").arg(object->strokeColor.name());
+    uiShapeRenderer->outlineColorButton->setStyleSheet(qss);
     uiShapeRenderer->outlineThicknessValue->setValue(object->strokeThickness);
     uiShapeRenderer->outlineStylePicker->setCurrentIndex(object->strokeStyle-1);
 
@@ -90,10 +96,8 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->blockSignals(false);
 }
 
-void Inspector::onEntityChanged(int row){
-    std::cout << "Row Changed" << std::endl;
-    std::cout << row << std::endl;
-
+void Inspector::onEntityChanged(int row)
+{
     currentIndex = row;
     updateInspector();
 }
@@ -144,6 +148,36 @@ void Inspector::onSizeChanged(double value)
 
     Action* action = new ChangeSize(object, value);
     main->DoAction(action);
+}
+
+void Inspector::onFillColorChanged()
+{
+    SceneObject** object = main->getSceneObject(currentIndex);
+
+    QColor color = QColorDialog::getColor((*object)->fillColor , this);
+    if(color.isValid())
+    {
+        QString qss = QString("background-color: %1").arg(color.name());
+        uiShapeRenderer->fillColorButton->setStyleSheet(qss);
+
+        Action* action = new ChangeFillColor(object, color);
+        main->DoAction(action);
+    }
+}
+
+void Inspector::onOutlineColorChanged()
+{
+    SceneObject** object = main->getSceneObject(currentIndex);
+
+    QColor color = QColorDialog::getColor((*object)->strokeColor , this);
+    if(color.isValid())
+    {
+        QString qss = QString("background-color: %1").arg(color.name());
+        uiShapeRenderer->outlineColorButton->setStyleSheet(qss);
+
+        Action* action = new ChangeOutlineColor(object, color);
+        main->DoAction(action);
+    }
 }
 
 void Inspector::onOutlineThicknessChanged(double value)

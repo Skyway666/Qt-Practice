@@ -183,3 +183,37 @@ void ChangeOutlineStyle::Undo()
         (*object)->strokeStyle = (Qt::PenStyle)(previousOutlineStyle+1);
     }
 }
+
+void ChangeFillColor::Do()
+{
+    if (*object != nullptr) //TODO
+    {
+        previousColor = (*object)->fillColor;
+        (*object)->fillColor = color;
+    }
+}
+
+void ChangeFillColor::Undo()
+{
+    if (*object != nullptr) //TODO
+    {
+        (*object)->fillColor = previousColor;
+    }
+}
+
+void ChangeOutlineColor::Do()
+{
+    if (*object != nullptr) //TODO
+    {
+        previousColor = (*object)->strokeColor;
+        (*object)->strokeColor = color;
+    }
+}
+
+void ChangeOutlineColor::Undo()
+{
+    if (*object != nullptr) //TODO
+    {
+        (*object)->strokeColor = previousColor;
+    }
+}
