@@ -54,4 +54,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     icons.qrc
 
-# CONFIG += console
+CONFIG += console

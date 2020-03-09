@@ -17,6 +17,7 @@ struct vec2{
 
 class SceneObject{
     public:
+        SceneObject(){}
         SceneObject(Shape _shape): shape(_shape){}
         virtual ~SceneObject() {}
         QString name;
@@ -33,6 +34,10 @@ class SceneObject{
 
         void setDrawingTools(QPainter* painter);
         void Draw(QPainter* painter);
+
+
+        // Serialization
+        void write(QJsonObject& json);
 };
 
 class SceneView : public QWidget
@@ -42,6 +47,9 @@ public:
     explicit SceneView(QWidget *parent = nullptr);
     int objectIndex = 0;
     SceneObject* sceneObjects[100];
+
+    void saveScene(QString path);
+    void insertObject(int index, SceneObject def);
 
 signals:
 

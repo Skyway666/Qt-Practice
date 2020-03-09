@@ -4,6 +4,14 @@
 #include <QBrush>
 #include <QPen>
 
+#include <QMessageBox>
+
+#include<QFile>
+#include<QJsonObject>
+#include<QJsonArray>
+#include<QJsonDocument>
+
+
 #include "iostream"
 
 SceneView::SceneView(QWidget *parent) : QWidget(parent)
@@ -55,7 +63,6 @@ void SceneView::paintEvent(QPaintEvent *event)
        sceneObjects[i]->Draw(&painter);
 }
 
-
 void SceneView::onEntityCreated(QString type){
    SceneObject* newObject = nullptr;
 
@@ -73,18 +80,59 @@ void SceneView::onEntityCreated(QString type){
   repaint();
 }
 
+void SceneView::insertObject(int index, SceneObject def){
+    // TODO(Lucas): Handle more than 100 objects
+    // Make room for the new object
+    for (int i = objectIndex; i > index; i--)
+        sceneObjects[i] = sceneObjects[i - 1];
+
+    sceneObjects[index] = new SceneObject;
+    *sceneObjects[index] = def;
+}
+
 void SceneView::onEntityRemoved(int index){
-   // TODO(Lucas): Display a message in the editor
-   if(index == -1){
-    std::cout << "Select an entity first" << std::endl;
-   } else{
+   // TODO(Lucas): Handle more than 100 objects
+   if(index == -1)
+     QMessageBox::information(this, "Warning", "Select an item to delete");
+   else{
     delete sceneObjects[index];
     sceneObjects[index] = nullptr;
 
-    for(int i = index; i < objectIndex; i++){
+    for(int i = index; i < objectIndex; i++)
         sceneObjects[i] = sceneObjects[i + 1];
-    }
+
     objectIndex--;
     repaint();
    }
+}
+
+
+void SceneObject::write(QJsonObject &json){
+    json["name"] = name;
+    json["active"] = active;
+    json["position_x"] = position.x;
+    json["position_y"] = position.y;
+
+
+}
+void SceneView::saveScene(QString path){
+    // Create jsonArray
+    QJsonArray json_sceneObjects;
+    // Fill it with objects
+    for(int i = 0; i < objectIndex && sceneObjects[i] != nullptr; i++){
+        QJsonObject json_sceneObject;
+        sceneObjects[i]->write(json_sceneObject);
+        json_sceneObjects.append(json_sceneObject);
+    }
+
+    // Create document
+    QJsonDocument doc(json_sceneObjects);
+
+    // Create file
+    QFile saveFile(path);
+    if (!saveFile.open(QIODevice::WriteOnly)) {
+          qWarning("Couldn't open save file.");
+      }
+    saveFile.write(doc.toJson());
+
 }

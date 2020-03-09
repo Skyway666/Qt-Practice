@@ -80,16 +80,14 @@ void MainWindow::Redo()
 }
 
 void MainWindow::openProject(){
-
-
-    QMessageBox::StandardButton button = QMessageBox::question(this, "Pregunta importante", "Eres tonto?");
+    /*QMessageBox::StandardButton button = QMessageBox::question(this, "Pregunta importante", "Eres tonto?");
 
     if(button == QMessageBox::Yes)
         std::cout <<"Ya lo sabia" << std::endl;
     else if(button == QMessageBox::No){
         std::cout <<"Que mentiroso..." << std::endl;
         return;
-    }
+    }*/
 
 
     QString filepath = QFileDialog::getOpenFileName(this, "Load file");
@@ -101,5 +99,11 @@ void MainWindow::openProject(){
 }
 
 void MainWindow::saveProject(){
-    std::cout <<"Save Project" << std::endl;
+    QString filepath = QFileDialog::getSaveFileName(this, "Save project as...");
+
+    scene->saveScene(filepath);
+
+    if(!filepath.isEmpty()){
+        QMessageBox::information(this, "Path", filepath);
+    }
 }
