@@ -24,8 +24,10 @@ public:
 public slots:
 
     void onEntityChanged(int row);
+    void onEntityRemoved(int index);
 
     //Object properties
+    void onNameChanged(const QString name);
     void onTransformChangeX(int value);
     void onTransformChangeY(int value);
     void onScaleChangeX(double value);

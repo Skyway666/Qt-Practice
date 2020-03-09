@@ -19,6 +19,8 @@ class SceneObject{
     public:
         SceneObject(Shape _shape): shape(_shape){}
         virtual ~SceneObject() {}
+        QString name;
+        bool active;
         Shape shape;
         vec2 position = vec2();
         vec2 scale = vec2(1, 2);

@@ -217,3 +217,30 @@ void ChangeOutlineColor::Undo()
         (*object)->strokeColor = previousColor;
     }
 }
+
+void ChangeName::Do()
+{
+    if (*object != nullptr) //TODO
+    {
+        previousName = (*object)->name;
+        (*object)->name = name;
+    }
+}
+
+void ChangeName::Undo()
+{
+    if (*object != nullptr) //TODO
+    {
+        (*object)->name = previousName;
+    }
+}
+
+void DeleteEntity::Do()
+{
+
+}
+
+void DeleteEntity::Undo()
+{
+
+}

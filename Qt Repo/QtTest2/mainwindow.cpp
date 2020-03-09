@@ -38,6 +38,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
     connect(hierarchy, SIGNAL(entityCreated(QString)), scene, SLOT(onEntityCreated(QString)));
     connect(hierarchy, SIGNAL(entityRemoved(int)), scene, SLOT(onEntityRemoved(int)));
+    connect(hierarchy, SIGNAL(entityRemoved(int)), inspector, SLOT(onEntityRemoved(int)));
 
     connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(Undo()));
     connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(Redo()));

@@ -35,6 +35,8 @@ Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
     setLayout(layout);
 
     //Set up Slots
+    connect(uiUniversals->nameInput, SIGNAL(textEdited(const QString)), this, SLOT(onNameChanged(const QString)));
+
     connect(uiTransform->PositionX, SIGNAL(valueChanged(int)), this, SLOT(onTransformChangeX(int)));
     connect(uiTransform->PositionY, SIGNAL(valueChanged(int)), this, SLOT(onTransformChangeY(int)));
     connect(uiTransform->ScaleX, SIGNAL(valueChanged(double)), this, SLOT(onScaleChangeX(double)));
@@ -56,9 +58,15 @@ Inspector::~Inspector()
 
 void Inspector::updateInspector()
 {
+    if (currentIndex == -1)
+        return;
+
     SceneObject* object = *main->getSceneObject(currentIndex);
 
     //Block signals during value changes
+    uiUniversals->nameInput->blockSignals(true);
+    uiUniversals->activeCheckbox->blockSignals(true);
+
     uiTransform->PositionX->blockSignals(true);
     uiTransform->PositionY->blockSignals(true);
     uiTransform->ScaleX->blockSignals(true);
@@ -70,6 +78,9 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->blockSignals(true);
 
     //Update values
+    uiUniversals->nameInput->setText(object->name);
+    uiUniversals->activeCheckbox->setChecked(object->active);
+
     uiTransform->PositionX->setValue(object->position.x);
     uiTransform->PositionY->setValue(object->position.y);
     uiTransform->ScaleX->setValue(object->scale.x);
@@ -85,6 +96,9 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->setCurrentIndex(object->strokeStyle-1);
 
     //Unblock signals after value changes
+    uiUniversals->nameInput->blockSignals(true);
+    uiUniversals->activeCheckbox->blockSignals(false);
+
     uiTransform->PositionX->blockSignals(false);
     uiTransform->PositionY->blockSignals(false);
     uiTransform->ScaleX->blockSignals(false);
@@ -100,6 +114,20 @@ void Inspector::onEntityChanged(int row)
 {
     currentIndex = row;
     updateInspector();
+}
+
+void Inspector::onEntityRemoved(int index)
+{
+    if (index <= currentIndex)
+        currentIndex--;
+}
+
+void Inspector::onNameChanged(const QString name)
+{
+    SceneObject** object = main->getSceneObject(currentIndex);
+
+    Action* action = new ChangeName(object, name);
+    main->DoAction(action);
 }
 
 void Inspector::onTransformChangeX(int value)

@@ -19,6 +19,32 @@ public:
     virtual void Undo(){};
 };
 
+class DeleteEntity : public Action
+{
+public:
+    DeleteEntity(SceneObject** object, int index): Action(object), index(index)
+    {}
+
+    SceneObject* object;
+    int index;
+
+    void Do() override;
+    void Undo() override;
+};
+
+class ChangeName : public Action
+{
+public:
+    ChangeName(SceneObject** object, QString name): Action(object), name(name)
+    {}
+
+    QString name;
+    QString previousName;
+
+    void Do() override;
+    void Undo() override;
+};
+
 class ChangePositionX : public Action
 {
 public:
