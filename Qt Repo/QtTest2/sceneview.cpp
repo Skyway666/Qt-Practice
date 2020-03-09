@@ -51,7 +51,7 @@ void SceneView::paintEvent(QPaintEvent *event)
 {
    QPainter painter(this);
 
-   for(int i = 0; i < 100 && sceneObjects[i] != nullptr; i++)
+   for(int i = 0; i < objectIndex && sceneObjects[i] != nullptr; i++)
        sceneObjects[i]->Draw(&painter);
 }
 
