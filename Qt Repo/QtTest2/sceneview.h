@@ -53,6 +53,7 @@ public:
 
     void saveScene(QString path);
     void loadScene(QString path, Hierarchy* hierarchy);
+    void updateHierarchy(Hierarchy* hierarchy);
     void insertObject(int index, SceneObject def);
 
 signals:

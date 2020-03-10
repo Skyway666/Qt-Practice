@@ -35,7 +35,9 @@ Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
     setLayout(layout);
 
     //Set up Slots
-    connect(uiUniversals->nameInput, SIGNAL(textEdited(const QString)), this, SLOT(onNameChanged(const QString)));
+
+    connect(uiUniversals->nameInput, SIGNAL(editingFinished()), this, SLOT(onNameChanged()));
+    connect(uiUniversals->activeCheckbox, SIGNAL(stateChanged(int)), this, SLOT(onActiveToggled(int)));
 
     connect(uiTransform->PositionX, SIGNAL(valueChanged(int)), this, SLOT(onTransformChangeX(int)));
     connect(uiTransform->PositionY, SIGNAL(valueChanged(int)), this, SLOT(onTransformChangeY(int)));
@@ -96,7 +98,7 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->setCurrentIndex(object->strokeStyle-1);
 
     //Unblock signals after value changes
-    uiUniversals->nameInput->blockSignals(true);
+    uiUniversals->nameInput->blockSignals(false);
     uiUniversals->activeCheckbox->blockSignals(false);
 
     uiTransform->PositionX->blockSignals(false);
@@ -110,6 +112,8 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->blockSignals(false);
 }
 
+
+
 void Inspector::onEntityChanged(int row)
 {
     currentIndex = row;
@@ -122,11 +126,20 @@ void Inspector::onEntityRemoved(int index)
         currentIndex--;
 }
 
-void Inspector::onNameChanged(const QString name)
-{
+void Inspector::onActiveToggled(int state){
+
     SceneObject** object = main->getSceneObject(currentIndex);
 
-    Action* action = new ChangeName(object, name);
+    Action* action = new SetActive(object, state == 2);
+    main->DoAction(action);
+}
+
+void Inspector::onNameChanged()
+{
+    if(currentIndex == -1) return;
+
+    SceneObject** object = main->getSceneObject(currentIndex);
+    Action* action = new ChangeName(object, uiUniversals->nameInput->text());
     main->DoAction(action);
 }
 

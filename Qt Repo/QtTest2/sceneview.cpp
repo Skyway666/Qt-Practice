@@ -65,7 +65,8 @@ void SceneView::paintEvent(QPaintEvent *event)
    QPainter painter(this);
 
    for(int i = 0; i < objectIndex && sceneObjects[i] != nullptr; i++)
-       sceneObjects[i]->Draw(&painter);
+       if(sceneObjects[i]->active)
+            sceneObjects[i]->Draw(&painter);
 }
 
 void SceneView::onEntityCreated(QString type){
@@ -176,7 +177,6 @@ void SceneView::saveScene(QString path){
 
 void SceneView::loadScene(QString path, Hierarchy* hierarchy){
 
-    hierarchy->list->clear();
     QFile loadFile(path);
     if (!loadFile.open(QIODevice::ReadOnly)) {
           qWarning("Couldn't open save file.");
@@ -191,6 +191,8 @@ void SceneView::loadScene(QString path, Hierarchy* hierarchy){
     QByteArray savedScene = loadFile.readAll();
     QJsonDocument loadDoc(QJsonDocument::fromJson(savedScene));
     QJsonArray array = loadDoc.array();
+    // Hierarchy will be updated as new objects are loaded
+    hierarchy->list->clear();
 
     for(int i = 0; i < array.size(); i++){
         QJsonObject json_sceneObject = array[i].toObject();
@@ -201,4 +203,10 @@ void SceneView::loadScene(QString path, Hierarchy* hierarchy){
 
     objectIndex = array.size();
     repaint();
+}
+
+void SceneView::updateHierarchy(Hierarchy *hierarchy){
+    hierarchy->list->clear();
+    for(int i = 0; i < objectIndex; i++)
+        hierarchy->list->addItem(sceneObjects[i]->name);
 }

@@ -32,6 +32,20 @@ public:
     void Undo() override;
 };
 
+class SetActive: public Action
+{
+public:
+    SetActive(SceneObject** object, bool state): Action(object), state(state)
+    {}
+
+    bool state;
+    bool previousState;
+
+    void Do() override;
+    void Undo() override;
+
+};
+
 class ChangeName : public Action
 {
 public:

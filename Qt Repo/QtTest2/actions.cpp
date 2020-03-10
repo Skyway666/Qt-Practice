@@ -218,6 +218,20 @@ void ChangeOutlineColor::Undo()
     }
 }
 
+void SetActive::Do(){
+    if (*object != nullptr) //TODO
+    {
+        previousState = (*object)->active;
+        (*object)->active = state;
+    }
+}
+void SetActive::Undo(){
+    if (*object != nullptr) //TODO
+    {
+        (*object)->active = previousState;
+    }
+}
+
 void ChangeName::Do()
 {
     if (*object != nullptr) //TODO

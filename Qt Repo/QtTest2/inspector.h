@@ -27,7 +27,8 @@ public slots:
     void onEntityRemoved(int index);
 
     //Object properties
-    void onNameChanged(const QString name);
+    void onActiveToggled(int state);
+    void onNameChanged();
     void onTransformChangeX(int value);
     void onTransformChangeY(int value);
     void onScaleChangeX(double value);

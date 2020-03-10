@@ -61,7 +61,8 @@ void MainWindow::updateInspector()
 
 void MainWindow::forceRepaint()
 {
-    scene->update();
+    scene->repaint();
+    //scene->updateHierarchy(hierarchy);
 }
 
 void MainWindow::DoAction(Action *action)
@@ -88,7 +89,6 @@ void MainWindow::openProject(){
         std::cout <<"Que mentiroso..." << std::endl;
         return;
     }*/
-
 
     QString filepath = QFileDialog::getOpenFileName(this, "Load file");
 
