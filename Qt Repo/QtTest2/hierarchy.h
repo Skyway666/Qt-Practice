@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+class QListWidget;
+
 namespace Ui {
 class Hierarchy;
 }
@@ -14,6 +16,8 @@ class Hierarchy : public QWidget
 public:
     explicit Hierarchy(QWidget *parent = nullptr);
     ~Hierarchy();
+
+    QListWidget* list = nullptr;
 
 signals:
     void entityChanged(int selectedRow);

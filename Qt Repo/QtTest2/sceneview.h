@@ -3,13 +3,15 @@
 
 #include <QWidget>
 
+class Hierarchy;
+
 enum Shape{
     RECTANGLE,
     ELIPSIS
 };
 
 struct vec2{
-    vec2() {};
+    vec2() {}
     vec2(int _x, int _y): x(_x), y(_y){}
     int x = 0;
     int y = 0;
@@ -20,15 +22,15 @@ class SceneObject{
         SceneObject(){}
         SceneObject(Shape _shape): shape(_shape){}
         virtual ~SceneObject() {}
-        QString name;
-        bool active;
-        Shape shape;
+        QString name = "Entity";
+        bool active = true;
+        Shape shape = Shape::ELIPSIS;
         vec2 position = vec2();
         vec2 scale = vec2(1, 2);
         float size = 100.0;
 
-        QColor fillColor = QColor(QColor::fromRgb(255,0,0)); // Red
-        QColor strokeColor = QColor(QColor::fromRgb(0,0,0)); // Black
+        QColor fillColor = QColor::fromRgb(255,0,0); // Red
+        QColor strokeColor = QColor::fromRgb(0,0,0); // Black
         int strokeThickness = 4;
         Qt::PenStyle strokeStyle = Qt::PenStyle::SolidLine;
 
@@ -38,6 +40,7 @@ class SceneObject{
 
         // Serialization
         void write(QJsonObject& json);
+        void read(QJsonObject& json);
 };
 
 class SceneView : public QWidget
@@ -49,6 +52,7 @@ public:
     SceneObject* sceneObjects[100];
 
     void saveScene(QString path);
+    void loadScene(QString path, Hierarchy* hierarchy);
     void insertObject(int index, SceneObject def);
 
 signals:

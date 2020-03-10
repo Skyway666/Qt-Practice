@@ -92,6 +92,8 @@ void MainWindow::openProject(){
 
     QString filepath = QFileDialog::getOpenFileName(this, "Load file");
 
+    scene->loadScene(filepath, hierarchy);
+
     if(!filepath.isEmpty()){
         QMessageBox::information(this, "Path", filepath);
     }

@@ -1,8 +1,10 @@
 #include "sceneview.h"
+#include "hierarchy.h"
 
 #include <QPainter>
 #include <QBrush>
 #include <QPen>
+#include <QColor>
 
 #include <QMessageBox>
 
@@ -10,6 +12,9 @@
 #include<QJsonObject>
 #include<QJsonArray>
 #include<QJsonDocument>
+#include<QByteArray>
+
+#include <QListWidget>
 
 
 #include "iostream"
@@ -106,15 +111,47 @@ void SceneView::onEntityRemoved(int index){
    }
 }
 
-
 void SceneObject::write(QJsonObject &json){
     json["name"] = name;
     json["active"] = active;
+    json["shape"] = shape;
     json["position_x"] = position.x;
     json["position_y"] = position.y;
+    json["scale_x"] = scale.x;
+    json["scale_y"] = scale.y;
+    json["size"] = size;
 
+    json["fillColor_r"] = fillColor.red();
+    json["fillColor_g"] = fillColor.green();
+    json["fillColor_b"] = fillColor.blue();
 
+    json["strokeColor_r"] = strokeColor.red();
+    json["strokeColor_g"] = strokeColor.green();
+    json["strokeColor_b"] = strokeColor.blue();
+
+    json["strokeThickness"] = strokeThickness;
+
+    json["strokeStyle"] = strokeStyle;
 }
+
+void SceneObject::read(QJsonObject &json){
+    name = json["name"].toString();
+    active = json["active"].toBool();
+    shape = Shape(json["shape"].toInt());
+    position.x = json["position_x"].toInt();
+    position.y = json["position_y"].toInt();
+    scale.x = json["scale_x"].toInt();
+    scale.y = json["scale_y"].toInt();
+    size = json["size"].toDouble();
+
+    fillColor = QColor::fromRgb(json["fillColor_r"].toInt(),json["fillColor_g"].toInt(),json["fillColor_b"].toInt());
+    strokeColor = QColor::fromRgb(json["strokeColor_r"].toInt(),json["strokeColor_g"].toInt(),json["strokeColor_b"].toInt());
+
+    strokeThickness = json["strokeThickness"].toInt();
+
+    strokeStyle =   Qt::PenStyle(json["strokeStyle"].toInt());
+}
+
 void SceneView::saveScene(QString path){
     // Create jsonArray
     QJsonArray json_sceneObjects;
@@ -132,7 +169,36 @@ void SceneView::saveScene(QString path){
     QFile saveFile(path);
     if (!saveFile.open(QIODevice::WriteOnly)) {
           qWarning("Couldn't open save file.");
+          return;
       }
     saveFile.write(doc.toJson());
+}
 
+void SceneView::loadScene(QString path, Hierarchy* hierarchy){
+
+    hierarchy->list->clear();
+    QFile loadFile(path);
+    if (!loadFile.open(QIODevice::ReadOnly)) {
+          qWarning("Couldn't open save file.");
+          return;
+    }
+    // Clear scene
+    for(int i = 0; i < objectIndex; i++){
+        delete sceneObjects[i];
+        sceneObjects[i] = nullptr;
+    }
+
+    QByteArray savedScene = loadFile.readAll();
+    QJsonDocument loadDoc(QJsonDocument::fromJson(savedScene));
+    QJsonArray array = loadDoc.array();
+
+    for(int i = 0; i < array.size(); i++){
+        QJsonObject json_sceneObject = array[i].toObject();
+        sceneObjects[i] = new SceneObject;
+        sceneObjects[i]->read(json_sceneObject);
+        hierarchy->list->addItem(sceneObjects[i]->name);
+    }
+
+    objectIndex = array.size();
+    repaint();
 }
