@@ -206,7 +206,6 @@ void SceneView::loadScene(QString path, Hierarchy* hierarchy){
 }
 
 void SceneView::updateHierarchy(Hierarchy *hierarchy){
-    hierarchy->list->clear();
     for(int i = 0; i < objectIndex; i++)
-        hierarchy->list->addItem(sceneObjects[i]->name);
+        hierarchy->list->item(i)->setText(sceneObjects[i]->name);
 }

@@ -26,6 +26,7 @@ public:
     SceneObject** getSceneObject(int index);
     void updateInspector();
     void forceRepaint();
+    void updateHierarchy();
 
     void DoAction(Action* action);
 

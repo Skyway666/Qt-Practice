@@ -62,7 +62,12 @@ void MainWindow::updateInspector()
 void MainWindow::forceRepaint()
 {
     scene->repaint();
-    //scene->updateHierarchy(hierarchy);
+    scene->updateHierarchy(hierarchy);
+
+}
+
+void MainWindow::updateHierarchy(){
+
 }
 
 void MainWindow::DoAction(Action *action)
