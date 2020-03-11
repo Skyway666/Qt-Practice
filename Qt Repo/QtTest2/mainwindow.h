@@ -33,6 +33,7 @@ public:
 public slots:
     void openProject();
     void saveProject();
+    void newProject();
 
     void Undo();
     void Redo();
@@ -43,6 +44,8 @@ private:
     Inspector* inspector;
     SceneView* scene;
     Actions* actions;
+
+    QString workingFile = "";
 };
 
 #endif // MAINWINDOW_H

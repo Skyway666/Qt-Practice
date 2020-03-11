@@ -96,6 +96,18 @@ void SceneView::insertObject(int index, SceneObject def){
     *sceneObjects[index] = def;
 }
 
+void SceneView::clearScene(Hierarchy *hierarchy){
+    hierarchy->list->clear();
+
+    for(int i = 0; i < objectIndex; i++){
+        delete sceneObjects[i];
+        sceneObjects[i] = nullptr;
+    }
+
+    objectIndex = 0;
+
+}
+
 void SceneView::onEntityRemoved(int index){
    // TODO(Lucas): Handle more than 100 objects
    if(index == -1)
@@ -183,16 +195,11 @@ void SceneView::loadScene(QString path, Hierarchy* hierarchy){
           return;
     }
     // Clear scene
-    for(int i = 0; i < objectIndex; i++){
-        delete sceneObjects[i];
-        sceneObjects[i] = nullptr;
-    }
+    clearScene(hierarchy);
 
     QByteArray savedScene = loadFile.readAll();
     QJsonDocument loadDoc(QJsonDocument::fromJson(savedScene));
     QJsonArray array = loadDoc.array();
-    // Hierarchy will be updated as new objects are loaded
-    hierarchy->list->clear();
 
     for(int i = 0; i < array.size(); i++){
         QJsonObject json_sceneObject = array[i].toObject();

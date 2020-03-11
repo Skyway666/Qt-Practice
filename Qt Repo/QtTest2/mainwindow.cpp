@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(uiMainWindow->actionOpen_Project, SIGNAL(triggered()), this, SLOT(openProject()));
     connect(uiMainWindow->actionSave_Project, SIGNAL(triggered()), this, SLOT(saveProject()));
+    connect(uiMainWindow->actionNew_Project, SIGNAL(triggered()), this, SLOT(newProject()));
     connect(uiMainWindow->actionExit, SIGNAL(triggered()), qApp, SLOT(quit()));
 
     hierarchy = new Hierarchy();
@@ -85,32 +86,44 @@ void MainWindow::Redo()
     actions->ReDo();
 }
 
+void MainWindow::newProject(){
+    QString filepath = QFileDialog::getSaveFileName(this, "New file");
+
+    workingFile = filepath;
+    scene->clearScene(hierarchy);
+}
 void MainWindow::openProject(){
-    /*QMessageBox::StandardButton button = QMessageBox::question(this, "Pregunta importante", "Eres tonto?");
-
-    if(button == QMessageBox::Yes)
-        std::cout <<"Ya lo sabia" << std::endl;
-    else if(button == QMessageBox::No){
-        std::cout <<"Que mentiroso..." << std::endl;
-        return;
-    }*/
-
     QString filepath = QFileDialog::getOpenFileName(this, "Load file");
 
     scene->loadScene(filepath, hierarchy);
 
     if(!filepath.isEmpty()){
-        QMessageBox::information(this, "Path", filepath);
+        QMessageBox::information(this, "Working on:", filepath);
     }
+    workingFile = filepath;
 
 }
 
 void MainWindow::saveProject(){
-    QString filepath = QFileDialog::getSaveFileName(this, "Save project as...");
+    QString filepath = "";
+    if(workingFile == ""){
+        filepath = QFileDialog::getSaveFileName(this, "Save project as...");
+        if(!filepath.isEmpty()){
+            QMessageBox::information(this, "New File:", filepath);
+        }
+        workingFile = filepath;
+    }
+    else
+        filepath = workingFile;
 
     scene->saveScene(filepath);
-
-    if(!filepath.isEmpty()){
-        QMessageBox::information(this, "Path", filepath);
-    }
 }
+
+/*QMessageBox::StandardButton button = QMessageBox::question(this, "Pregunta importante", "Eres tonto?");
+
+if(button == QMessageBox::Yes)
+    std::cout <<"Ya lo sabia" << std::endl;
+else if(button == QMessageBox::No){
+    std::cout <<"Que mentiroso..." << std::endl;
+    return;
+}*/
