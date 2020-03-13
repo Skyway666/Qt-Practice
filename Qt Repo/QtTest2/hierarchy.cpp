@@ -20,14 +20,37 @@ Hierarchy::~Hierarchy()
     delete ui;
 }
 
+int Hierarchy::currentSelected()
+{
+    return ui->listWidget->currentRow();
+}
+
+void Hierarchy::createEntity(QString name)
+{
+    ui->listWidget->addItem(name);
+}
+
+void Hierarchy::insertEntity(QString name, uint index)
+{
+    ui->listWidget->insertItem(index, name);
+}
+
+void Hierarchy::deleteEntity(uint index)
+{
+    ui->listWidget->blockSignals(true);
+
+    ui->listWidget->takeItem(index);
+
+    ui->listWidget->blockSignals(false);
+}
+
 void Hierarchy::onAddEntity(){
-    ui->listWidget->addItem("Entity");
-    emit entityCreated(ui->entityTypeSelector->currentText());
+    emit entityCreated(ui->entityTypeSelector->currentText(), ui->listWidget->count());
 }
 void Hierarchy::onRemoveEntity(){
     int index = ui->listWidget->currentRow();
-    ui->listWidget->takeItem(index);
-    emit entityRemoved(index);
+    if (index != -1)
+        emit entityRemoved(index);
 }
 
 void Hierarchy::onEntitySelected(int row){

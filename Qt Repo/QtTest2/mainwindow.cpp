@@ -37,12 +37,13 @@ MainWindow::MainWindow(QWidget *parent) :
     actions = new Actions(this);
 
     connect(hierarchy, SIGNAL(entityChanged(int)), inspector, SLOT(onEntityChanged(int)));
-    connect(hierarchy, SIGNAL(entityCreated(QString)), scene, SLOT(onEntityCreated(QString)));
-    connect(hierarchy, SIGNAL(entityRemoved(int)), scene, SLOT(onEntityRemoved(int)));
-    connect(hierarchy, SIGNAL(entityRemoved(int)), inspector, SLOT(onEntityRemoved(int)));
+    connect(hierarchy, SIGNAL(entityCreated(QString, uint)), this, SLOT(newEntity(QString, uint)));
+    connect(hierarchy, SIGNAL(entityRemoved(int)), this, SLOT(deletedEntity(int)));
 
     connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(Undo()));
     connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(Redo()));
+
+    connect(inspector, SIGNAL(doAction(Action*)), this, SLOT(Do(Action*)));
 }
 
 MainWindow::~MainWindow()
@@ -64,11 +65,34 @@ void MainWindow::forceRepaint()
 {
     scene->repaint();
     scene->updateHierarchy(hierarchy);
-
 }
 
 void MainWindow::updateHierarchy(){
 
+}
+
+int MainWindow::getSelectionIndex()
+{
+    return hierarchy->currentSelected();
+}
+
+void MainWindow::createObject(QString type, uint objectIndex)
+{
+    scene->addObject(type);
+    hierarchy->insertEntity("Entity", objectIndex);
+}
+
+void MainWindow::insertObject(SceneObject def, uint objectIndex)
+{
+    scene->insertObject(objectIndex, def);
+    hierarchy->insertEntity(def.name, objectIndex);
+}
+
+void MainWindow::removeObject(uint objectIndex)
+{
+    scene->removeObject(objectIndex);
+    hierarchy->deleteEntity(objectIndex);
+    inspector->hideInspector();
 }
 
 void MainWindow::DoAction(Action *action)
@@ -86,12 +110,32 @@ void MainWindow::Redo()
     actions->ReDo();
 }
 
+// SLOTS
+
 void MainWindow::newProject(){
     QString filepath = QFileDialog::getSaveFileName(this, "New file");
 
     workingFile = filepath;
     scene->clearScene(hierarchy);
 }
+
+void MainWindow::newEntity(QString type, uint index)
+{
+    Action* action = new CreateEntity(index, type, this);
+    Do(action);
+}
+
+void MainWindow::deletedEntity(int index)
+{
+    Action* action = new DeleteEntity(index, this);
+    Do(action);
+}
+
+void MainWindow::Do(Action *action)
+{
+    actions->Do(action);
+}
+
 void MainWindow::openProject(){
     QString filepath = QFileDialog::getOpenFileName(this, "Load file");
 
@@ -118,12 +162,3 @@ void MainWindow::saveProject(){
 
     scene->saveScene(filepath);
 }
-
-/*QMessageBox::StandardButton button = QMessageBox::question(this, "Pregunta importante", "Eres tonto?");
-
-if(button == QMessageBox::Yes)
-    std::cout <<"Ya lo sabia" << std::endl;
-else if(button == QMessageBox::No){
-    std::cout <<"Que mentiroso..." << std::endl;
-    return;
-}*/

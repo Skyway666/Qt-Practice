@@ -17,11 +17,17 @@ public:
     explicit Hierarchy(QWidget *parent = nullptr);
     ~Hierarchy();
 
+    int currentSelected();
+
+    void createEntity(QString name);
+    void insertEntity(QString name, uint index);
+    void deleteEntity(uint index);
+
     QListWidget* list = nullptr;
 
 signals:
     void entityChanged(int selectedRow);
-    void entityCreated(QString type);
+    void entityCreated(QString type, uint index);
     void entityRemoved(int index);
 
 public slots:

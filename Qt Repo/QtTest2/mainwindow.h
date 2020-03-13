@@ -28,6 +28,12 @@ public:
     void forceRepaint();
     void updateHierarchy();
 
+    int getSelectionIndex();
+
+    void createObject(QString type, uint objectIndex);
+    void insertObject(SceneObject def, uint objectIndex);
+    void removeObject(uint objectIndex);
+
     void DoAction(Action* action);
 
 public slots:
@@ -35,6 +41,10 @@ public slots:
     void saveProject();
     void newProject();
 
+    void newEntity(QString type, uint index);
+    void deletedEntity(int index);
+
+    void Do(Action* action);
     void Undo();
     void Redo();
 

@@ -14,16 +14,17 @@ Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
      uiUniversals(new Ui::Universals),
      uiTransform(new Ui::Transform),
      uiShapeRenderer(new Ui::ShapeRenderer),
-     main(main)
+     main(main),
+     currentIndex(-1)
 {
 
-    QWidget* universalsWidget = new QWidget;
+    universalsWidget = new QWidget;
     uiUniversals->setupUi(universalsWidget);
 
-    QWidget* transformWidget = new QWidget;
+    transformWidget = new QWidget;
     uiTransform->setupUi(transformWidget);
 
-    QWidget* shapeRendererWidget = new QWidget;
+    shapeRendererWidget = new QWidget;
     uiShapeRenderer->setupUi(shapeRendererWidget);
 
     QVBoxLayout* layout = new QVBoxLayout();
@@ -58,9 +59,29 @@ Inspector::~Inspector()
     delete uiUniversals;
 }
 
+void Inspector::showInspector()
+{
+    hidden = false;
+
+    universalsWidget->show();
+    transformWidget->show();
+    shapeRendererWidget->show();
+}
+
+void Inspector::hideInspector()
+{
+    hidden = true;
+
+    universalsWidget->hide();
+    transformWidget->hide();
+    shapeRendererWidget->hide();
+}
+
 void Inspector::updateInspector()
 {
-    if (currentIndex == -1)
+    currentIndex = main->getSelectionIndex();
+
+    if (currentIndex == -1 || hidden)
         return;
 
     SceneObject* object = *main->getSceneObject(currentIndex);
@@ -117,78 +138,65 @@ void Inspector::updateInspector()
 void Inspector::onEntityChanged(int row)
 {
     currentIndex = row;
+    showInspector();
     updateInspector();
 }
 
-void Inspector::onEntityRemoved(int index)
+void Inspector::onActiveToggled(int state)
 {
-    if (index <= currentIndex)
-        currentIndex--;
-}
-
-void Inspector::onActiveToggled(int state){
-
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new SetActive(object, state == 2);
-    main->DoAction(action);
+    Action* action = new SetActive(currentIndex, state == 2);
+    emit doAction(action);
 }
 
 void Inspector::onNameChanged()
 {
     if(currentIndex == -1) return;
 
-    SceneObject** object = main->getSceneObject(currentIndex);
-    Action* action = new ChangeName(object, uiUniversals->nameInput->text());
-    main->DoAction(action);
+    QString name = uiUniversals->nameInput->text();
+
+    SceneObject* object = *main->getSceneObject(currentIndex);
+
+    if (object != nullptr && object->name != name)
+    {
+        Action* action = new ChangeName(currentIndex, name);
+        emit doAction(action);
+    }
 }
 
 void Inspector::onTransformChangeX(int value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangePositionX(object, value);
-    main->DoAction(action);
+    Action* action = new ChangePositionX(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onTransformChangeY(int value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangePositionY(object, value);
-    main->DoAction(action);
+    Action* action = new ChangePositionY(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onScaleChangeX(double value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeScaleX(object, value);
-    main->DoAction(action);
+    Action* action = new ChangeScaleX(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onScaleChangeY(double value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeScaleY(object, value);
-    main->DoAction(action);
+    Action* action = new ChangeScaleY(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onShapeChanged(int index)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeShape(object, index);
-    main->DoAction(action);
+    Action* action = new ChangeShape(currentIndex, index);
+    emit doAction(action);
 }
 
 void Inspector::onSizeChanged(double value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeSize(object, value);
-    main->DoAction(action);
+    Action* action = new ChangeSize(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onFillColorChanged()
@@ -201,8 +209,8 @@ void Inspector::onFillColorChanged()
         QString qss = QString("background-color: %1").arg(color.name());
         uiShapeRenderer->fillColorButton->setStyleSheet(qss);
 
-        Action* action = new ChangeFillColor(object, color);
-        main->DoAction(action);
+        Action* action = new ChangeFillColor(currentIndex, color);
+        emit doAction(action);
     }
 }
 
@@ -216,23 +224,19 @@ void Inspector::onOutlineColorChanged()
         QString qss = QString("background-color: %1").arg(color.name());
         uiShapeRenderer->outlineColorButton->setStyleSheet(qss);
 
-        Action* action = new ChangeOutlineColor(object, color);
-        main->DoAction(action);
+        Action* action = new ChangeOutlineColor(currentIndex, color);
+        emit doAction(action);
     }
 }
 
 void Inspector::onOutlineThicknessChanged(double value)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeOutlineThickness(object, value);
-    main->DoAction(action);
+    Action* action = new ChangeOutlineThickness(currentIndex, value);
+    emit doAction(action);
 }
 
 void Inspector::onOutlineStyleChanged(int index)
 {
-    SceneObject** object = main->getSceneObject(currentIndex);
-
-    Action* action = new ChangeOutlineStyle(object, index);
-    main->DoAction(action);
+    Action* action = new ChangeOutlineStyle(currentIndex, index);
+    emit doAction(action);
 }

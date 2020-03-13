@@ -86,14 +86,15 @@ void SceneView::onEntityCreated(QString type){
   repaint();
 }
 
-void SceneView::insertObject(int index, SceneObject def){
+void SceneView::insertObject(uint index, SceneObject def){
     // TODO(Lucas): Handle more than 100 objects
     // Make room for the new object
     for (int i = objectIndex; i > index; i--)
         sceneObjects[i] = sceneObjects[i - 1];
 
-    sceneObjects[index] = new SceneObject;
+    sceneObjects[index] = new SceneObject();
     *sceneObjects[index] = def;
+    objectIndex++;
 }
 
 void SceneView::clearScene(Hierarchy *hierarchy){
@@ -106,6 +107,36 @@ void SceneView::clearScene(Hierarchy *hierarchy){
 
     objectIndex = 0;
 
+}
+
+void SceneView::addObject(QString type)
+{
+    SceneObject* newObject = nullptr;
+
+    if(type == "Elipsis")
+     newObject = new SceneObject(ELIPSIS);
+    else if(type == "Rectangle")
+     newObject = new SceneObject(RECTANGLE);
+
+   sceneObjects[objectIndex++] = newObject;
+
+   /*static int x = 0;
+   newObject->position.x = 100 + x;
+   x += 100;
+   newObject->position.y = 200;*/
+   repaint();
+}
+
+void SceneView::removeObject(uint index)
+{
+    delete sceneObjects[index];
+    sceneObjects[index] = nullptr;
+
+    for(int i = index; i < objectIndex; i++)
+        sceneObjects[i] = sceneObjects[i + 1];
+
+    objectIndex--;
+    repaint();
 }
 
 void SceneView::onEntityRemoved(int index){

@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>QT 2D Engine -  Adrià Ferrer &amp; Lucas Garcia</string>
   </property>
   <widget class="QWidget" name="centralWidget"/>
   <widget class="QDockWidget" name="Project">
@@ -50,7 +50,7 @@
      <x>0</x>
      <y>0</y>
      <width>609</width>
-     <height>25</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

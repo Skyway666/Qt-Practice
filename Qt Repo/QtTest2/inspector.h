@@ -10,6 +10,7 @@ namespace Ui{
 }
 
 class MainWindow;
+class Action;
 
 class Inspector: public QWidget
 {
@@ -19,12 +20,17 @@ public:
     explicit Inspector(MainWindow* main, QWidget* parent = nullptr);
     ~Inspector();
 
+    void showInspector();
+    void hideInspector();
     void updateInspector();
+
+signals:
+
+    void doAction(Action*);
 
 public slots:
 
     void onEntityChanged(int row);
-    void onEntityRemoved(int index);
 
     //Object properties
     void onActiveToggled(int state);
@@ -46,6 +52,11 @@ private:
     Ui::Universals*     uiUniversals;
     Ui::Transform*      uiTransform;
     Ui::ShapeRenderer*  uiShapeRenderer;
+
+    QWidget* universalsWidget;
+    QWidget* transformWidget;
+    QWidget* shapeRendererWidget;
+    bool hidden = false;
 
     int currentIndex;
 

@@ -10,14 +10,20 @@ Actions::Actions(MainWindow* main): main(main)
 void Actions::Do(Action* action)
 {
     doneActions.push_back(action);
-    action->Do();
-    main->forceRepaint();
+    SceneObject** object = main->getSceneObject(action->objectIndex);
 
-    for(int i = 0; i < undoneActions.size(); ++i)
+    if (object != nullptr)
     {
-        delete undoneActions[i];
+        action->Do(object);
+        main->updateInspector();
+        main->forceRepaint();
+
+        for(int i = 0; i < undoneActions.size(); ++i)
+        {
+            delete undoneActions[i];
+        }
+        undoneActions.clear();
     }
-    undoneActions.clear();
 }
 
 void Actions::Undo()
@@ -26,11 +32,16 @@ void Actions::Undo()
     {
         Action* action = doneActions.back();
         doneActions.pop_back();
-        action->Undo();
-        main->updateInspector();
-        main->forceRepaint();
+        SceneObject** object = main->getSceneObject(action->objectIndex);
 
-        undoneActions.push_back(action);
+        if (object != nullptr)
+        {
+            action->Undo(object);
+            main->updateInspector();
+            main->forceRepaint();
+
+            undoneActions.push_back(action);
+        }
     }
 }
 
@@ -40,221 +51,174 @@ void Actions::ReDo()
     {
         Action* action = undoneActions.back();
         undoneActions.pop_back();
-        action->Do();
-        main->updateInspector();
-        main->forceRepaint();
+        SceneObject** object = main->getSceneObject(action->objectIndex);
 
-        doneActions.push_back(action);
+        if (object != nullptr)
+        {
+            action->Do(object);
+            main->updateInspector();
+            main->forceRepaint();
+
+            doneActions.push_back(action);
+        }
     }
 }
 
-void ChangeShape::Do()
+void ChangeShape::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousShapeType = (*object)->shape;
-        (*object)->shape = (Shape)shapeType;
-    }
+     previousShapeType = (*object)->shape;
+     (*object)->shape = (Shape)shapeType;
 }
 
-void ChangeShape::Undo()
+void ChangeShape::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->shape = (Shape)previousShapeType;
-    }
+    (*object)->shape = (Shape)previousShapeType;
 }
 
-void ChangePositionX::Do()
+void ChangePositionX::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->position.x;
-        (*object)->position.x = value;
-    }
+    previousValue = (*object)->position.x;
+    (*object)->position.x = value;
 }
 
-void ChangePositionX::Undo()
+void ChangePositionX::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->position.x = previousValue;
-    }
+    (*object)->position.x = previousValue;
 }
 
-void ChangePositionY::Do()
+void ChangePositionY::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->position.y;
-        (*object)->position.y = value;
-    }
+    previousValue = (*object)->position.y;
+    (*object)->position.y = value;
 }
 
-void ChangePositionY::Undo()
+void ChangePositionY::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->position.y = previousValue;
-    }
+    (*object)->position.y = previousValue;
 }
 
-void ChangeSize::Do()
+void ChangeSize::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->size;
-        (*object)->size = value;
-    }
+    previousValue = (*object)->size;
+    (*object)->size = value;
 }
 
-void ChangeSize::Undo()
+void ChangeSize::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->size = previousValue;
-    }
+    (*object)->size = previousValue;
 }
 
-void ChangeScaleX::Do()
+void ChangeScaleX::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->scale.x;
-        (*object)->scale.x = value;
-    }
+    previousValue = (*object)->scale.x;
+    (*object)->scale.x = value;
 }
 
-void ChangeScaleX::Undo()
+void ChangeScaleX::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->scale.x = previousValue;
-    }
+    (*object)->scale.x = previousValue;
 }
 
-void ChangeScaleY::Do()
+void ChangeScaleY::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->scale.y;
-        (*object)->scale.y = value;
-    }
+    previousValue = (*object)->scale.y;
+    (*object)->scale.y = value;
 }
 
-void ChangeScaleY::Undo()
+void ChangeScaleY::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->scale.y = previousValue;
-    }
+    (*object)->scale.y = previousValue;
 }
 
-void ChangeOutlineThickness::Do()
+void ChangeOutlineThickness::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousValue = (*object)->strokeThickness;
-        (*object)->strokeThickness = value;
-    }
+    previousValue = (*object)->strokeThickness;
+    (*object)->strokeThickness = value;
 }
 
-void ChangeOutlineThickness::Undo()
+void ChangeOutlineThickness::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->strokeThickness = previousValue;
-    }
+    (*object)->strokeThickness = previousValue;
 }
 
-void ChangeOutlineStyle::Do()
+void ChangeOutlineStyle::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousOutlineStyle = (*object)->strokeStyle-1;
-        (*object)->strokeStyle = (Qt::PenStyle)(outlineStyle+1);
-    }
+    previousOutlineStyle = (*object)->strokeStyle-1;
+    (*object)->strokeStyle = (Qt::PenStyle)(outlineStyle+1);
 }
 
-void ChangeOutlineStyle::Undo()
+void ChangeOutlineStyle::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->strokeStyle = (Qt::PenStyle)(previousOutlineStyle+1);
-    }
+    (*object)->strokeStyle = (Qt::PenStyle)(previousOutlineStyle+1);
 }
 
-void ChangeFillColor::Do()
+void ChangeFillColor::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousColor = (*object)->fillColor;
-        (*object)->fillColor = color;
-    }
+    previousColor = (*object)->fillColor;
+    (*object)->fillColor = color;
 }
 
-void ChangeFillColor::Undo()
+void ChangeFillColor::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->fillColor = previousColor;
-    }
+    (*object)->fillColor = previousColor;
 }
 
-void ChangeOutlineColor::Do()
+void ChangeOutlineColor::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousColor = (*object)->strokeColor;
-        (*object)->strokeColor = color;
-    }
+    previousColor = (*object)->strokeColor;
+    (*object)->strokeColor = color;
 }
 
-void ChangeOutlineColor::Undo()
+void ChangeOutlineColor::Undo(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->strokeColor = previousColor;
-    }
+    (*object)->strokeColor = previousColor;
 }
 
-void SetActive::Do(){
-    if (*object != nullptr) //TODO
-    {
-        previousState = (*object)->active;
-        (*object)->active = state;
-    }
-}
-void SetActive::Undo(){
-    if (*object != nullptr) //TODO
-    {
-        (*object)->active = previousState;
-    }
-}
-
-void ChangeName::Do()
+void SetActive::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        previousName = (*object)->name;
-        (*object)->name = name;
-    }
+    previousState = (*object)->active;
+    (*object)->active = state;
+}
+void SetActive::Undo(SceneObject** object)
+{
+    (*object)->active = previousState;
 }
 
-void ChangeName::Undo()
+void ChangeName::Do(SceneObject** object)
 {
-    if (*object != nullptr) //TODO
-    {
-        (*object)->name = previousName;
-    }
+    previousName = (*object)->name;
+    (*object)->name = name;
 }
 
-void DeleteEntity::Do()
+void ChangeName::Undo(SceneObject** object)
 {
-
+    (*object)->name = previousName;
 }
 
-void DeleteEntity::Undo()
+DeleteEntity::~DeleteEntity()
 {
+    delete deletedObject;
+}
 
+void DeleteEntity::Do(SceneObject** object)
+{
+    deletedObject = new SceneObject();
+    *deletedObject = **object;
+
+    main->removeObject(objectIndex);
+}
+
+void DeleteEntity::Undo(SceneObject** object)
+{
+    main->insertObject(*deletedObject, objectIndex);
+}
+
+void CreateEntity::Do(SceneObject **object)
+{
+    main->createObject(type, objectIndex);
+}
+
+void CreateEntity::Undo(SceneObject **object)
+{
+    main->removeObject(objectIndex);
 }

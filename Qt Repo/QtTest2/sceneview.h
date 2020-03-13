@@ -25,7 +25,7 @@ class SceneObject{
         QString name = "Entity";
         bool active = true;
         Shape shape = Shape::ELIPSIS;
-        vec2 position = vec2();
+        vec2 position = vec2(0, 0);
         vec2 scale = vec2(1, 2);
         float size = 100.0;
 
@@ -56,7 +56,9 @@ public:
     void updateHierarchy(Hierarchy* hierarchy);
 
     void clearScene(Hierarchy* hierarchy);
-    void insertObject(int index, SceneObject def);
+    void addObject(QString type);
+    void insertObject(uint index, SceneObject def);
+    void removeObject(uint index);
 
 signals:
 
