@@ -95,7 +95,10 @@ void MainWindow::removeObject(uint objectIndex)
 {
     scene->removeObject(objectIndex);
     hierarchy->deleteEntity(objectIndex);
-    inspector->hideInspector();
+
+    //Hide inspector if it was last object
+    if (scene->objectIndex == 0)
+        inspector->hideInspector();
 }
 
 void MainWindow::DoAction(Action *action)
@@ -151,11 +154,10 @@ void MainWindow::openProject(){
 
     scene->loadScene(filepath, hierarchy);
 
-    if(!filepath.isEmpty()){
+    if(!filepath.isEmpty()){        
         QMessageBox::information(this, "Working on:", filepath);
     }
     workingFile = filepath;
-
 }
 
 void MainWindow::saveProject(){

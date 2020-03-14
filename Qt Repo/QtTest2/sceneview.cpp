@@ -35,13 +35,20 @@ void SceneObject::setDrawingTools(QPainter* painter){
     // Set fill
     brush.setColor(fillColor);
     brush.setStyle(Qt::BrushStyle::SolidPattern);
-    // Set Stroke
-    pen.setWidth(strokeThickness);
-    pen.setColor(strokeColor);
-    pen.setStyle(strokeStyle);
 
     painter->setBrush(brush);
-    painter->setPen(pen);
+
+    // Set Stroke
+    if (strokeThickness > 0)
+    {
+        pen.setWidth(strokeThickness);
+        pen.setColor(strokeColor);
+        pen.setStyle(strokeStyle);
+
+        painter->setPen(pen);
+    }
+    else
+        painter->setPen(Qt::NoPen);
 }
 
 void SceneObject::Draw(QPainter *painter)
@@ -177,10 +184,10 @@ void SceneObject::read(QJsonObject &json){
     name = json["name"].toString();
     active = json["active"].toBool();
     shape = Shape(json["shape"].toInt());
-    position.x = json["position_x"].toInt();
-    position.y = json["position_y"].toInt();
-    scale.x = json["scale_x"].toInt();
-    scale.y = json["scale_y"].toInt();
+    position.x = json["position_x"].toDouble();
+    position.y = json["position_y"].toDouble();
+    scale.x = json["scale_x"].toDouble();
+    scale.y = json["scale_y"].toDouble();
     size = json["size"].toDouble();
 
     fillColor = QColor::fromRgb(json["fillColor_r"].toInt(),json["fillColor_g"].toInt(),json["fillColor_b"].toInt());

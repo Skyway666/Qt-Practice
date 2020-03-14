@@ -13,8 +13,8 @@ enum Shape{
 struct vec2{
     vec2() {}
     vec2(int _x, int _y): x(_x), y(_y){}
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
 };
 
 class SceneObject{
@@ -25,8 +25,8 @@ class SceneObject{
         QString name = "Entity";
         bool active = true;
         Shape shape = Shape::ELIPSIS;
-        vec2 position = vec2(0, 0);
-        vec2 scale = vec2(1, 2);
+        vec2 position = vec2(0.0, 0.0);
+        vec2 scale = vec2(1.0, 2.0);
         float size = 100.0;
 
         QColor fillColor = QColor::fromRgb(255,0,0); // Red

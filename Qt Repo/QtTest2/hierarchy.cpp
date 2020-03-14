@@ -58,5 +58,9 @@ void Hierarchy::onRemoveEntity(){
 }
 
 void Hierarchy::onEntitySelected(int row){
+    if (row != -1)
+    {
+        ui->listWidget->item(row)->setSelected(true);
+    }
     emit entityChanged(row);
 }

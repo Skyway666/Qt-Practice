@@ -51,6 +51,8 @@ Inspector::Inspector(MainWindow* main, QWidget* parent): QWidget(parent),
     connect(uiShapeRenderer->outlineColorButton, SIGNAL(clicked()), this, SLOT(onOutlineColorChanged()));
     connect(uiShapeRenderer->outlineThicknessValue, SIGNAL(valueChanged(double)), this, SLOT(onOutlineThicknessChanged(double)));
     connect(uiShapeRenderer->outlineStylePicker, SIGNAL(currentIndexChanged(int)), this, SLOT(onOutlineStyleChanged(int)));
+
+    hideInspector();
 }
 
 Inspector::~Inspector()
@@ -133,13 +135,17 @@ void Inspector::updateInspector()
     uiShapeRenderer->outlineStylePicker->blockSignals(false);
 }
 
-
-
 void Inspector::onEntityChanged(int row)
 {
     currentIndex = row;
-    showInspector();
-    updateInspector();
+    if (currentIndex != -1)
+    {
+        if (hidden)
+            showInspector();
+        updateInspector();
+    }
+    else if (!hidden)
+        hideInspector();
 }
 
 void Inspector::onActiveToggled(int state)
