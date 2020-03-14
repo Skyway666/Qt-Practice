@@ -6,5 +6,7 @@
         <file alias="Exit">icons/Badge-multiply.png</file>
         <file alias="Undo">icons/Arrow left.png</file>
         <file alias="Redo">icons/Arrow right.png</file>
+        <file>icons/New Elipse.png</file>
+        <file>icons/New Rectangle.png</file>
     </qresource>
 </RCC>

@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(uiMainWindow->actionUndo, SIGNAL(triggered()), this, SLOT(Undo()));
     connect(uiMainWindow->actionRedo, SIGNAL(triggered()), this, SLOT(Redo()));
 
+    connect(uiMainWindow->actionNew_Rectangle, SIGNAL(triggered()), this, SLOT(NewRectangle()));
+    connect(uiMainWindow->actionNew_Elipse, SIGNAL(triggered()), this, SLOT(NewElipse()));
+
     connect(inspector, SIGNAL(doAction(Action*)), this, SLOT(Do(Action*)));
 }
 
@@ -108,6 +111,13 @@ void MainWindow::Undo()
 void MainWindow::Redo()
 {
     actions->ReDo();
+}
+
+void MainWindow::NewRectangle(){
+    hierarchy->addEntity("Rectangle");
+}
+void MainWindow::NewElipse(){
+    hierarchy->addEntity("Elipsis");
 }
 
 // SLOTS

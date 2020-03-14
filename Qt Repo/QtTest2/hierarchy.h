@@ -23,6 +23,8 @@ public:
     void insertEntity(QString name, uint index);
     void deleteEntity(uint index);
 
+    void addEntity(QString name);
+
     QListWidget* list = nullptr;
 
 signals:

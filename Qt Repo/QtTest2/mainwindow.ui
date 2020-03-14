@@ -50,7 +50,7 @@
      <x>0</x>
      <y>0</y>
      <width>609</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -96,6 +96,8 @@
    <addaction name="actionSave_Project"/>
    <addaction name="actionUndo"/>
    <addaction name="actionRedo"/>
+   <addaction name="actionNew_Rectangle"/>
+   <addaction name="actionNew_Elipse"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="actionOpen_Project">
@@ -187,6 +189,30 @@
    </property>
    <property name="text">
     <string>Inspector</string>
+   </property>
+  </action>
+  <action name="actionNew_Rectangle">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/New Rectangle.png</normaloff>:/icons/icons/New Rectangle.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Rectangle</string>
+   </property>
+   <property name="toolTip">
+    <string>New Rectangle</string>
+   </property>
+  </action>
+  <action name="actionNew_Elipse">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/New Elipse.png</normaloff>:/icons/icons/New Elipse.png</iconset>
+   </property>
+   <property name="text">
+    <string>New Elipse</string>
+   </property>
+   <property name="toolTip">
+    <string>New Rectangle</string>
    </property>
   </action>
  </widget>

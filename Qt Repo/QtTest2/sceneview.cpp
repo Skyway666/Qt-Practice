@@ -119,11 +119,6 @@ void SceneView::addObject(QString type)
      newObject = new SceneObject(RECTANGLE);
 
    sceneObjects[objectIndex++] = newObject;
-
-   /*static int x = 0;
-   newObject->position.x = 100 + x;
-   x += 100;
-   newObject->position.y = 200;*/
    repaint();
 }
 

@@ -44,6 +44,10 @@ void Hierarchy::deleteEntity(uint index)
     ui->listWidget->blockSignals(false);
 }
 
+void Hierarchy::addEntity(QString type){
+    emit entityCreated(type, ui->listWidget->count());
+}
+
 void Hierarchy::onAddEntity(){
     emit entityCreated(ui->entityTypeSelector->currentText(), ui->listWidget->count());
 }

@@ -47,6 +47,8 @@ public slots:
     void Do(Action* action);
     void Undo();
     void Redo();
+    void NewRectangle();
+    void NewElipse();
 
 private:
     Ui::MainWindow *uiMainWindow;
