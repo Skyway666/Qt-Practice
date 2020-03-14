@@ -19,12 +19,12 @@ Once an object is created, there is a list of attributes that can be edited, ref
 - Name: Name which will represent the object in the hierarchy
 - Active: Weather the object is to be drawn or not
 - Shape: Which shape the object is
-- Position: Central position of the object
+- Position: Top Left position of the object
 - Scale: Ratio of width and height of the object
 - Size: Scale of the object
 
-- Fill color
-- Stroke color
+- Fill color: Color picker!
+- Stroke color: Color picker!
 - Stroke thickness
 - Stroke style: Solid, Dash or Dot
 
@@ -52,6 +52,11 @@ to save to, otherwise it will automatically overwrite it.
 You can exit the app from the main menu.
 
 
+## Examples
+
+In the folder called "Project Examples", you can find two files which can be loaded in the engine, to be able to see 
+the posibilities of the engine.
+
 ## Qt Features
 
 
@@ -64,11 +69,16 @@ Signals/Slots:
 	- Inspector-MainWindow.
 		
 		
+Form files:
+
+- The inspector is formed by a "universals", "shaperenderer" and "transform" form files.
+- The main window is completelly composed by a form file.
+- The hierarchy is another form file.
+
 Style sheets:
 
-- The inspector is formed by a "universals", "shaperenderer" and "transform" style sheet.
-- The main window is completelly composed by a style sheet.
-- The hierarchy is another style sheet.
+- The color picker buttons were implementing using a style sheet.
+
 	
 Actions: 
 
