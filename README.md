@@ -8,7 +8,7 @@ This 2D engine is basically a shape editor.
 
 Start by creating your first object! You can do this by either selecting a shape and click "Add" on the hierarchy menu
 
-![](https://github.com/Skyway666/Qt-Practice/blob/master/Web%20Images/Add.PNG)
+![](https://github.com/Skyway666/Qt-Practice/blob/master/Web%20Images/Add_Hierarchy.PNG) ![](https://github.com/Skyway666/Qt-Practice/blob/master/Web%20Images/Add_Toolbar.PNG)
 
 Or directly click on the toolbar
 
