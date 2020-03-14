@@ -1,6 +1,7 @@
 #include "hierarchy.h"
 #include "ui_hierarchy.h"
 
+#include "QMessageBox"
 Hierarchy::Hierarchy(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Hierarchy)
@@ -55,6 +56,8 @@ void Hierarchy::onRemoveEntity(){
     int index = ui->listWidget->currentRow();
     if (index != -1)
         emit entityRemoved(index);
+    else
+        QMessageBox::information(this, "Warning", "Select an item to delete");
 }
 
 void Hierarchy::onEntitySelected(int row){

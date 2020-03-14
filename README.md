@@ -2,7 +2,7 @@
 
 By Lucas García and Adriá Ferrer.
 
-## Features
+## Project Features
 
 This 2D engine is basically a shape editor. 
 
@@ -50,5 +50,39 @@ to save to, otherwise it will automatically overwrite it.
 ![](https://github.com/Skyway666/Qt-Practice/blob/master/Web%20Images/New_File_Toolbar.PNG)
 
 You can exit the app from the main menu.
+
+
+## Qt Features
+
+Signals/Slots:
+	- Ui callbacks
+	- Communication UI pannels:
+		- Hierarchy-Inspector.
+		- Hierarchy-MainWindow.
+		- Inspector-MainWindow.
+Style sheets:
+	- The inspector is formed by a "universals", "shaperenderer" and "transform" style sheet.
+	- The main window is completelly composed by a style sheet.
+	- The hierarchy is another style sheet.
+Actions: 
+	- "New Project", "Open Project", "Save Project", "Undo", "Redo",
+	  "New Rectangle", "New Elipsis" and "Exit" are all actions.
+Parsing JSON:
+	- QFile, QJsonObject, QJsonArray, QJsonDocument and QByteArray are used for serialization.
+Resource Files:
+	- All icons come from a resources file
+Dialogs:
+	- When looking for a file to open or to save, a QFileDialog is used.
+	- When opening a project, the editor displays a QMessageBox::information with its path.
+	- When saving a project without having started one, the editor displays a QMessageBox::information with its path.
+	- When trying to "Remove" without selecting an object, a  QMessageBox::information 
+	  will be displayed with a warning.
+
+
+
+
+#Links
+
+Github Repo: https://github.com/Skyway666/Qt-Practice
 
 

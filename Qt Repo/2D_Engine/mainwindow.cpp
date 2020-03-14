@@ -154,9 +154,6 @@ void MainWindow::openProject(){
 
     scene->loadScene(filepath, hierarchy);
 
-    if(!filepath.isEmpty()){        
-        QMessageBox::information(this, "Working on:", filepath);
-    }
     workingFile = filepath;
 }
 
