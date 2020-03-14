@@ -1,10 +1,10 @@
 # 2D Engine
 
-By Lucas GarcÌa and Adri· Ferrer.
+By Lucas Garc√≠a and Adri√° Ferrer.
 
 ## Project Features
 
-This 2D engine is basically a shape editor. 
+This 2D engine is basically a shape editor.
 
 Start by creating your first object! You can do this by either selecting a shape and click "Add" on the hierarchy menu
 
@@ -54,34 +54,47 @@ You can exit the app from the main menu.
 
 ## Qt Features
 
+
 Signals/Slots:
-	- Ui callbacks
-	- Communication UI pannels:
-		- Hierarchy-Inspector.
-		- Hierarchy-MainWindow.
-		- Inspector-MainWindow.
+
+- Ui callbacks
+- Communication UI pannels:
+	- Hierarchy-Inspector.
+	- Hierarchy-MainWindow.
+	- Inspector-MainWindow.
+		
+		
 Style sheets:
-	- The inspector is formed by a "universals", "shaperenderer" and "transform" style sheet.
-	- The main window is completelly composed by a style sheet.
-	- The hierarchy is another style sheet.
+
+- The inspector is formed by a "universals", "shaperenderer" and "transform" style sheet.
+- The main window is completelly composed by a style sheet.
+- The hierarchy is another style sheet.
+	
 Actions: 
-	- "New Project", "Open Project", "Save Project", "Undo", "Redo",
-	  "New Rectangle", "New Elipsis" and "Exit" are all actions.
+
+- "New Project", "Open Project", "Save Project", "Undo", "Redo",
+  "New Rectangle", "New Elipsis" and "Exit" are all actions.
+	  
 Parsing JSON:
-	- QFile, QJsonObject, QJsonArray, QJsonDocument and QByteArray are used for serialization.
+
+- QFile, QJsonObject, QJsonArray, QJsonDocument and QByteArray are used for serialization.
+	
 Resource Files:
-	- All icons come from a resources file
+
+- All icons come from a resources file
+	
 Dialogs:
-	- When looking for a file to open or to save, a QFileDialog is used.
-	- When opening a project, the editor displays a QMessageBox::information with its path.
-	- When saving a project without having started one, the editor displays a QMessageBox::information with its path.
-	- When trying to "Remove" without selecting an object, a  QMessageBox::information 
-	  will be displayed with a warning.
+
+- When looking for a file to open or to save, a QFileDialog is used.
+- When opening a project, the editor displays a QMessageBox::information with its path.
+- When saving a project without having started one, the editor displays a QMessageBox::information with its path.
+- When trying to "Remove" without selecting an object, a  QMessageBox::information 
+  will be displayed with a warning.
 
 
 
 
-#Links
+# Links
 
 Github Repo: https://github.com/Skyway666/Qt-Practice
 
